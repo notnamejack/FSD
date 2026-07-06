@@ -1,0 +1,21 @@
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  &__logo {
+    font-size: 18px;
+    color: #fff;
+
+    &:hover {
+      color: #fff;
+      opacity: 0.85;
+    }
+  }
+
+  &__tagline {
+    color: rgb(255 255 255 / 72%);
+    font-size: 13px;
+  }
+}

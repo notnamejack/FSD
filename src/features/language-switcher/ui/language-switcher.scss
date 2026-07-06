@@ -1,0 +1,10 @@
+.language-switcher {
+  min-width: 140px;
+
+  &__value,
+  &__option {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+  }
+}

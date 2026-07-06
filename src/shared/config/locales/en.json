@@ -1,0 +1,25 @@
+{
+  "app": {
+    "title": "React FSD Starter",
+    "description": "Starter template with React, TypeScript, Feature-Sliced Design, Ant Design, i18n and OpenAPI client.",
+    "tagline": "FSD + Vite + Ant Design"
+  },
+  "counter": {
+    "title": "Counter",
+    "increase": "Increase",
+    "decrease": "Decrease"
+  },
+  "health": {
+    "title": "API Health",
+    "status": "Status: {{status}}",
+    "unavailable": "API is not available. Set VITE_API_URL in .env.local"
+  },
+  "notFound": {
+    "subtitle": "Page not found",
+    "backHome": "Back to home"
+  },
+  "language": {
+    "en": "English",
+    "ru": "Russian"
+  }
+}

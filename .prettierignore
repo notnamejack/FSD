@@ -1,0 +1,6 @@
+dist
+node_modules
+coverage
+*.min.*
+package-lock.json
+src/shared/api/generated

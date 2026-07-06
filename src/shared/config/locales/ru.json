@@ -1,0 +1,25 @@
+{
+  "app": {
+    "title": "React FSD Starter",
+    "description": "Стартовый шаблон на React, TypeScript, Feature-Sliced Design, Ant Design, i18n и OpenAPI-клиент.",
+    "tagline": "FSD + Vite + Ant Design"
+  },
+  "counter": {
+    "title": "Счётчик",
+    "increase": "Прибавить",
+    "decrease": "Убавить"
+  },
+  "health": {
+    "title": "Статус API",
+    "status": "Статус: {{status}}",
+    "unavailable": "API недоступен. Укажите VITE_API_URL в .env.local"
+  },
+  "notFound": {
+    "subtitle": "Страница не найдена",
+    "backHome": "На главную"
+  },
+  "language": {
+    "en": "English",
+    "ru": "Русский"
+  }
+}

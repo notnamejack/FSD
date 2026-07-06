@@ -1,0 +1,16 @@
+{
+  "extends": ["stylelint-config-standard", "stylelint-config-standard-scss"],
+  "plugins": ["stylelint-prettier"],
+  "rules": {
+    "prettier/prettier": true,
+    "selector-class-pattern": null,
+    "scss/at-rule-no-unknown": true,
+    "no-empty-source": null,
+    "no-descending-specificity": null
+  },
+  "ignoreFiles": [
+    "dist/**/*",
+    "node_modules/**/*",
+    "src/shared/api/generated/**/*"
+  ]
+}
