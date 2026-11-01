@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { getApiErrorMessage } from '@/shared/api';
+import { getApiErrorMessage, resolveApiBaseUrl } from '@/shared/api';
 
 type HealthResponse = {
   status: string;
@@ -9,7 +9,7 @@ type HealthResponse = {
 export const healthApi = createApi({
   reducerPath: 'healthApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_API_URL ?? '',
+    baseUrl: resolveApiBaseUrl(),
   }),
   endpoints: (builder) => ({
     getHealth: builder.query<HealthResponse, void>({

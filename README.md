@@ -21,7 +21,7 @@
 | Стили      | SCSS (BEM-нейминг)                                |
 | Линт       | ESLint (flat config) + Stylelint + Prettier       |
 | Пре-коммит | Husky + lint-staged                               |
-| API-клиент | openapi-typescript-codegen (генерация из OpenAPI) |
+| API-клиент | @hey-api/openapi-ts (генерация из OpenAPI, fetch) |
 
 **Требования:** Node.js ≥ 20, npm ≥ 10
 
@@ -50,7 +50,7 @@ npm run dev                  # http://localhost:3000
 | `npm run build`         | Прод-сборка (type-check + vite build)                                 |
 | `npm run codestyle`     | Полная проверка: type-check + lint + stylelint + format:check       |
 | `npm run codestyle:fix` | Авто-фикс: lint:fix + stylelint:fix + format                        |
-| `npm run gen:api`       | Генерация API-клиента из `openapi.json`                               |
+| `npm run gen:api`       | Генерация API-клиента из `openapi.json` (`openapi-ts.config.ts`)      |
 
 > **Главный скрипт кодстайла** — `npm run codestyle`. На пре-коммите через
 > `lint-staged` проверяются только застейдженные файлы.
@@ -96,6 +96,7 @@ src/
 │
 └── shared/
     ├── api/                   # configureApiClient, getApiClient, errors
+    │   ├── hey-api.ts         # runtime-конфиг клиента (не генерируется)
     │   └── generated/         # сгенерированный клиент (npm run gen:api)
     ├── config/                # ROUTES, APP_NAME, locales
     ├── lib/                   # i18n, classNames
@@ -125,8 +126,15 @@ src/
 npm run gen:api
 ```
 
-Код генерируется в `src/shared/api/generated`. Используй `getApiClient()` для
-вызовов через сгенерированный `ApiClient`, или RTK Query в `entities/*/api/`.
+Конфиг генератора — `openapi-ts.config.ts`. Код пишется в `src/shared/api/generated`.
+База, `credentials: 'same-origin'` и запрет запроса без `VITE_API_URL` живут в
+`src/shared/api/hey-api.ts` и `client.ts` — их генератор не затирает.
+
+Path-параметры кодируются `encodeURIComponent` (`ENCODE_PATH` в `client.ts`).
+`configureApiClient()` при старте проверяет, что клиент реально кодирует
+`/ ? #`, и падает, если сгенерированный сериализатор откатился на `encodeURI`.
+
+Вызовы — `getApiClient()` / `getApiHealth()`, либо RTK Query в `entities/*/api/`.
 
 ---
 
@@ -171,11 +179,15 @@ src/entities/order/
 
 ## Переменные окружения
 
-| Переменная     | Описание                          |
-| -------------- | --------------------------------- |
-| `VITE_API_URL` | Базовый URL бэкенда (без `/` в конце) |
+| Переменная     | Описание                                      |
+| -------------- | --------------------------------------------- |
+| `VITE_API_URL` | Абсолютный `https` URL бэкенда (без `/` в конце) |
 
 Скопируй `.env.example` → `.env.local` и перезапусти `npm run dev`.
+Пустое значение не бьёт в тот же origin: health-запрос пропускается, а клиент
+без базы кидает ошибку. `http://` принимается только для localhost в dev.
+Секреты в `VITE_*` не клади — они инлайнятся в бандл. `.env` и `.env.*` в git
+не входят, кроме `.env.example`.
 
 ---
 

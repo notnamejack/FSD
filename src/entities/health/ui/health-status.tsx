@@ -2,11 +2,18 @@ import { ApiOutlined } from '@ant-design/icons';
 import { Alert, Card, Spin } from 'antd';
 import { useTranslation } from 'react-i18next';
 
+import { resolveApiBaseUrl } from '@/shared/api';
+
 import { useGetHealthQuery } from '../api/healthApi';
 
 export const HealthStatus = () => {
   const { t } = useTranslation();
-  const { data, error, isFetching, isUninitialized } = useGetHealthQuery();
+  const apiConfigured = resolveApiBaseUrl().length > 0;
+  const { data, error, isFetching, isUninitialized } = useGetHealthQuery(
+    undefined,
+    { skip: !apiConfigured },
+  );
+  const pending = apiConfigured && (isUninitialized || isFetching);
 
   return (
     <Card
@@ -14,9 +21,9 @@ export const HealthStatus = () => {
       style={{ width: 280 }}
       extra={<ApiOutlined />}
     >
-      {isUninitialized || isFetching ? (
+      {pending ? (
         <Spin />
-      ) : error ? (
+      ) : error || !apiConfigured ? (
         <Alert type="warning" message={t('health.unavailable')} showIcon />
       ) : (
         <Alert

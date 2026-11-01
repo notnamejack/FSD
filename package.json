@@ -14,7 +14,7 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,css,scss,json,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css,scss,json,md}\"",
     "type-check": "tsc --noEmit",
-    "gen:api": "openapi --input ./openapi.json --output ./src/shared/api/generated --client fetch --useOptions --useUnionTypes --name ApiClient",
+    "gen:api": "openapi-ts",
     "codestyle": "npm run type-check && npm run lint && npm run stylelint && npm run format:check",
     "codestyle:fix": "npm run lint:fix && npm run stylelint:fix && npm run format",
     "prepare": "husky"
@@ -29,10 +29,11 @@
     "react-dom": "^19.2.7",
     "react-i18next": "^17.0.8",
     "react-redux": "^9.3.0",
-    "react-router-dom": "^7.16.0"
+    "react-router-dom": "^7.18.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
+    "@hey-api/openapi-ts": "0.99.0",
     "@types/node": "^25.9.1",
     "@types/react": "^19.2.16",
     "@types/react-dom": "^19.2.3",
@@ -46,7 +47,6 @@
     "globals": "^17.6.0",
     "husky": "^9.1.7",
     "lint-staged": "^17.0.7",
-    "openapi-typescript-codegen": "^0.30.0",
     "prettier": "^3.8.3",
     "sass": "^1.100.0",
     "stylelint": "^17.12.0",
@@ -55,6 +55,6 @@
     "stylelint-prettier": "^5.0.3",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.60.1",
-    "vite": "^8.0.16"
+    "vite": "^8.3.5"
   }
 }
